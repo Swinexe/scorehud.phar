@@ -177,4 +177,9 @@ namespace JackMD\ScoreHud\Addons
 }
 ```
 
-I make a array and store the processed string as value to the key I want as tag. Then I check if the original string has that tag by using `strpos()` and if found I return the value stored against the tag in the array.
+I make a array and store the processed string as value to the key I want as tag. Then I check if the original string has that tag by using `strpos()` and if found I return the value stored against the tag in the array. You can do the same for any amount of tags.
+
+### Step 6
+
+Your addon is now complete. Simple wasn't it? 
+To test it follow the tutorial [here](https://github.com/JackMD/ScoreHud/tree/master#how-to-use-addons).
