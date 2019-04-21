@@ -85,7 +85,7 @@ namespace JackMD\ScoreHud\Addons
 
 Till now we haven't done anything to make ScoreHud aware of what tag we would be using and what value should appear on the scoreboard.
 
-To accomplish this we use `getProcessedString(Player $player, string $string): string` method and return the string after editing the value. 
+To accomplish this we use `getProcessedTags(Player $player, string $string): array` method and return the array containing the tags this addon would provide. 
 
 ```php
 /**
@@ -118,68 +118,24 @@ namespace JackMD\ScoreHud\Addons
 		/**
 		 * @param Player $player
 		 * @param string $string
-		 * @return string
+		 * @return array
 		 */
-		public function getProcessedString(Player $player, string $string): string{
-			return "{money}" => str_replace("{money}", $this->getPlayerMoney($player), $string);
-		}
-	}
-}
-```
-
-Now if your addon uses only one tag you are fine by doing that. If however your addon supports multiple tags then you can do something like this in `getProcessedString()` method.
-
-```php
-/**
- * @name EconomyApiAddon
- * @main JackMD\ScoreHud\Addons\EconomyApiAddon
- */
-namespace JackMD\ScoreHud\Addons
-{
-	use JackMD\ScoreHud\addon\AddonBase;
-	use onebone\economyapi\EconomyAPI;
-	use pocketmine\Player;
-
-	class EconomyApiAddon extends AddonBase{
-
-		/**
-		 * @param Player $player
-		 * @return float|string
-		 */
-		private function getPlayerMoney(Player $player){
-			/** @var EconomyAPI $economyAPI */
-			$economyAPI = $this->getScoreHud()->getServer()->getPluginManager()->getPlugin("EconomyAPI");
-
-			if($economyAPI instanceof EconomyAPI){
-				return $economyAPI->myMoney($player);
-			}else{
-				return "Plugin not found";
-			}
-		}
-
-		/**
-		 * @param Player $player
-		 * @param string $string
-		 * @return string
-		 */
-		public function getProcessedString(Player $player, string $string): string{
-			$data = [
-				"{money}" => str_replace("{money}", $this->getPlayerMoney($player), $string)
-			];
+		public function getProcessedTags(Player $player, string $string): array{
+			$tags = [];
 
 			if(strpos($string, "{money}") !== false){
-				return $data["{money}"];
+				$tags["{money}"] = str_replace("{money}", $this->getPlayerMoney($player), $string);
 			}
 
-			return $string;
+			return $tags;
 		}
 	}
 }
 ```
 
-I make a array and store the processed string as value to the key I want as tag. Then I check if the original string has that tag by using `strpos()` and if found I return the value stored against the tag in the array. You can do the same for any amount of tags.
+First we make an empty array. Then we using `strpos()` check if the tag we want to provide support for exists in the `$string`. If it does we add it to the array with key pointing to the tag and value pointing to the replaced value as shown in the example above. We then return the tags.
 
 ### Step 6
 
-Your addon is now complete. Simple wasn't it? 
+Your addon is now complete. Simple wasn't it? <br />
 To test it follow the tutorial [here](https://github.com/JackMD/ScoreHud/tree/master#how-to-use-addons).
