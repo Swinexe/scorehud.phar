@@ -44,7 +44,7 @@ namespace JackMD\ScoreHud\Addons
 }
 ```
 
-The extending is necessary. Doing so you will be able to access the methods mentioned and explained [here]().
+The extending is necessary. Doing so you will be able to access the methods mentioned and explained [here](https://github.com/JackMD/ScoreHud/blob/master/src/JackMD/ScoreHud/addon/Addon.php).
 
 ### Step 4
 
