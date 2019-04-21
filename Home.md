@@ -5,7 +5,8 @@ The whole process is extremely simple.
 
 ### Step 1
 
-You start by making a new PHP file. For this tutorial I would be using a file called `EconomyApiAddon.php`. And adding a `namespace`. It could be any of your choice. The `{}` at the end of the namespace are necessary.
+You start by making a new PHP file. <br /><br />
+For this tutorial I would be using a file called `EconomyApiAddon.php`. And adding a `namespace`. It could be any of your choice. The `{}` at the end of the namespace are necessary.
 
 ```php
 namespace JackMD\ScoreHud\Addons{}
@@ -51,7 +52,7 @@ The extending is necessary. Doing so you will be able to access the methods ment
 
 ### Step 4
 
-I now make use `onEnable()` method. It is only called once when the addon enables.
+I now make use `onEnable()` method. It is only called once when the addon enables.<br />
 I then get hold of the plugin needed which in this case is EconomyAPI like so.
 
 ```php
@@ -82,7 +83,7 @@ Its worth mentioning that we do not need to check if whether `$this->economyAPI`
 
 ### Step 5
 
-Till now we haven't done anything to make ScoreHud aware of what tag we would be using and what value should appear on the scoreboard.<br />
+Till now we haven't done anything to make ScoreHud aware of what tag we would be using and what value should appear on the scoreboard.<br /><br />
 
 To accomplish this we use `getProcessedTags(Player $player): array` method and return the array containing the tags this addon would provide. 
 
@@ -120,7 +121,7 @@ namespace JackMD\ScoreHud\Addons
 }
 ```
 
-We simply return the array containing our required tag as key and its data as value. 
+We simply return the array containing our required tag as key and its data as value. <br />
 More tags can also be added.
 
 ### Step 6
