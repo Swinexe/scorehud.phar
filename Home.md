@@ -19,11 +19,13 @@ Now define the name and main file location of the addon like so.
 /**
  * @name EconomyApiAddon
  * @main JackMD\ScoreHud\Addons\EconomyApiAddon
+ * @depend EconomyAPI
  */
 namespace JackMD\ScoreHud\Addons{}
 ```
 
-The `@name` will be the name of your addon and `@main` will be the `namespace` plus `@name` of the addon.
+The `@name` will be the name of your addon and `@main` will be the `namespace` plus `@name` of the addon.<br />
+The `@depend` tag is optional. If set it will make sure that the addon won't get loaded until the required plugin is loaded and if the plugin doesn't exist it will then disable the addon. 
 
 ### Step 3
 
@@ -33,6 +35,7 @@ Now we will make a class with the same name as in `@name` which will extend `Add
 /**
  * @name EconomyApiAddon
  * @main JackMD\ScoreHud\Addons\EconomyApiAddon
+ * @depend EconomyAPI
  */
 namespace JackMD\ScoreHud\Addons
 {
@@ -44,16 +47,18 @@ namespace JackMD\ScoreHud\Addons
 }
 ```
 
-The extending is necessary. Doing so you will be able to access the methods mentioned and explained [here](https://github.com/JackMD/ScoreHud/blob/master/src/JackMD/ScoreHud/addon/Addon.php).
+The extending is necessary. Doing so you will be able to access the methods mentioned and explained [here](https://github.com/JackMD/ScoreHud/blob/master/src/JackMD/ScoreHud/addon/AddonBase.php).
 
 ### Step 4
 
-I now make a function which gets EconomyAPI plugin by using `getScoreHud()` method to get the servers instance.
+I now make use `onEnable()` method. It is only called once when the addon enables.
+I then get hold of the plugin needed which in this case is EconomyAPI like so.
 
 ```php
 /**
  * @name EconomyApiAddon
  * @main JackMD\ScoreHud\Addons\EconomyApiAddon
+ * @depend EconomyAPI
  */
 namespace JackMD\ScoreHud\Addons
 {
@@ -63,27 +68,21 @@ namespace JackMD\ScoreHud\Addons
 
 	class EconomyApiAddon extends AddonBase{
 
-		/**
-		 * @param Player $player
-		 * @return float|string
-		 */
-		private function getPlayerMoney(Player $player){
-			/** @var EconomyAPI $economyAPI */
-			$economyAPI = $this->getScoreHud()->getServer()->getPluginManager()->getPlugin("EconomyAPI");
+		/** @var EconomyAPI */
+		private $economyAPI;
 
-			if($economyAPI instanceof EconomyAPI){
-				return $economyAPI->myMoney($player);
-			}else{
-				return "Plugin not found";
-			}
+		public function onEnable(): void{
+			$this->economyAPI = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
 		}
 	}
 }
 ```
 
+Its worth mentioning that we do not need to check if whether `$this->economyAPI` is an instance of `EconomyAPI` since we added `@depend` tag. If `EconomyAPI` was not found then this addon will simply not be enabled.
+
 ### Step 5
 
-Till now we haven't done anything to make ScoreHud aware of what tag we would be using and what value should appear on the scoreboard.
+Till now we haven't done anything to make ScoreHud aware of what tag we would be using and what value should appear on the scoreboard.<br />
 
 To accomplish this we use `getProcessedTags(Player $player): array` method and return the array containing the tags this addon would provide. 
 
@@ -91,6 +90,7 @@ To accomplish this we use `getProcessedTags(Player $player): array` method and r
 /**
  * @name EconomyApiAddon
  * @main JackMD\ScoreHud\Addons\EconomyApiAddon
+ * @depend EconomyAPI
  */
 namespace JackMD\ScoreHud\Addons
 {
@@ -100,19 +100,11 @@ namespace JackMD\ScoreHud\Addons
 
 	class EconomyApiAddon extends AddonBase{
 
-		/**
-		 * @param Player $player
-		 * @return float|string
-		 */
-		private function getPlayerMoney(Player $player){
-			/** @var EconomyAPI $economyAPI */
-			$economyAPI = $this->getScoreHud()->getServer()->getPluginManager()->getPlugin("EconomyAPI");
+		/** @var EconomyAPI */
+		private $economyAPI;
 
-			if($economyAPI instanceof EconomyAPI){
-				return $economyAPI->myMoney($player);
-			}else{
-				return "Plugin not found";
-			}
+		public function onEnable(): void{
+			$this->economyAPI = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
 		}
 
 		/**
@@ -121,14 +113,15 @@ namespace JackMD\ScoreHud\Addons
 		 */
 		public function getProcessedTags(Player $player): array{
 			return [
-				"{money}" => $this->getPlayerMoney($player),
+				"{money}" => $this->economyAPI->myMoney($player)
 			];
 		}
 	}
 }
 ```
 
-We simply return the array containing our required tag as key and its data as value. More tags can also be added.
+We simply return the array containing our required tag as key and its data as value. 
+More tags can also be added.
 
 ### Step 6
 
