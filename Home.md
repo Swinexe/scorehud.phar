@@ -133,7 +133,7 @@ namespace JackMD\ScoreHud\Addons
 }
 ```
 
-First we make an empty array. Then we using `strpos()` check if the tag we want to provide support for exists in the `$string`. If it does we add it to the array with key pointing to the tag and value pointing to the replaced value as shown in the example above. We then return the tags.
+First we make an empty array. Then by using `strpos()` check if the tag we want to provide support for exists in the `$string`. If it does we add it to the array with key pointing to the tag and value pointing to the replaced value as shown in the example above. We then return the tags.
 
 ### Step 6
 
