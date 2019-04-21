@@ -85,7 +85,7 @@ namespace JackMD\ScoreHud\Addons
 
 Till now we haven't done anything to make ScoreHud aware of what tag we would be using and what value should appear on the scoreboard.
 
-To accomplish this we use `getProcessedTags(Player $player, string $string): array` method and return the array containing the tags this addon would provide. 
+To accomplish this we use `getProcessedTags(Player $player): array` method and return the array containing the tags this addon would provide. 
 
 ```php
 /**
@@ -117,23 +117,18 @@ namespace JackMD\ScoreHud\Addons
 
 		/**
 		 * @param Player $player
-		 * @param string $string
 		 * @return array
 		 */
-		public function getProcessedTags(Player $player, string $string): array{
-			$tags = [];
-
-			if(strpos($string, "{money}") !== false){
-				$tags["{money}"] = str_replace("{money}", $this->getPlayerMoney($player), $string);
-			}
-
-			return $tags;
+		public function getProcessedTags(Player $player): array{
+			return [
+				"{money}" => $this->getPlayerMoney($player),
+			];
 		}
 	}
 }
 ```
 
-First we make an empty array. Then by using `strpos()` check if the tag we want to provide support for exists in the `$string`. If it does we add it to the array with key pointing to the tag and value pointing to the replaced value as shown in the example above. We then return the tags.
+We simply return the array containing our required tag as key and its data as value. More tags can also be added.
 
 ### Step 6
 
