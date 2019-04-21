@@ -26,7 +26,8 @@ namespace JackMD\ScoreHud\Addons{}
 ```
 
 The `@name` will be the name of your addon and `@main` will be the `namespace` plus `@name` of the addon.<br />
-The `@depend` tag is optional. If set it will make sure that the addon won't get loaded until the required plugin is loaded and if the plugin doesn't exist it will then disable the addon. 
+The `@depend` tag is optional. If set it will make sure that the addon won't get loaded until the required plugin is loaded and if the plugin doesn't exist it will then disable the addon. <br />
+You can add multiple plugins in `@depend` just separate them with a comma. Example: `@depend MyPlot,BlockSniper,Core`
 
 ### Step 3
 
