@@ -19,6 +19,7 @@ Now define the name and main file location of the addon like so.
 ```php
 /**
  * @name EconomyApiAddon
+ * @version 1.0.0
  * @main JackMD\ScoreHud\Addons\EconomyApiAddon
  * @depend EconomyAPI
  */
@@ -26,8 +27,10 @@ namespace JackMD\ScoreHud\Addons{}
 ```
 
 The `@name` will be the name of your addon and `@main` will be the `namespace` plus `@name` of the addon.<br />
+The `@version` is important and is used to check the addon version. Its also used to tell the user if an addon update is available.<br />
 The `@depend` tag is optional. If set it will make sure that the addon won't get loaded until the required plugin is loaded and if the plugin doesn't exist it will then disable the addon. <br />
-You can add multiple plugins in `@depend` just separate them with a comma. Example: `@depend MyPlot,BlockSniper,Core`
+You can add multiple plugins in `@depend` just separate them with a comma. Example: ```@depend MyPlot,BlockSniper,Core```
+Additionally you can also use `@api` and mention the api your addon is compatible with. The api is compared with PocketMine-MP api. Multiple api's can also be added separated by a comma (,). Example: ```@api 3.0.0,4.0.0```
 
 ### Step 3
 
@@ -36,6 +39,7 @@ Now we will make a class with the same name as in `@name` which will extend `Add
 ```php
 /**
  * @name EconomyApiAddon
+ * @version 1.0.0
  * @main JackMD\ScoreHud\Addons\EconomyApiAddon
  * @depend EconomyAPI
  */
@@ -59,6 +63,7 @@ I then get hold of the plugin needed which in this case is EconomyAPI like so.
 ```php
 /**
  * @name EconomyApiAddon
+ * @version 1.0.0
  * @main JackMD\ScoreHud\Addons\EconomyApiAddon
  * @depend EconomyAPI
  */
@@ -91,6 +96,7 @@ To accomplish this we use `getProcessedTags(Player $player): array` method and r
 ```php
 /**
  * @name EconomyApiAddon
+ * @version 1.0.0
  * @main JackMD\ScoreHud\Addons\EconomyApiAddon
  * @depend EconomyAPI
  */
