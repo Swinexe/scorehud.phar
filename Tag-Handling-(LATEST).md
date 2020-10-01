@@ -38,8 +38,12 @@ public function onTagResolve(TagsResolveEvent $event){
 		case "scorehud.online":
 			$tag->setValue(strval(count($this->getServer()->getOnlinePlayers())));
 		break;
+
+		case "scorehud.money":
+			$tag->setValue(strval($player->getMoney()));
+		break;
 	}
-};
+}
 ```
 
 ### Step 3
