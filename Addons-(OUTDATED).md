@@ -1,3 +1,7 @@
+>## NOTICE
+>Addons have been removed on version 6.0+ <br />
+>Use tag handling instead.
+
 Here are the general instructing for **developers** who want to add support of their plugin to ScoreHud via an addon. <br />
 The whole process is extremely simple.
 
