@@ -19,9 +19,9 @@ Handle the `TagResolveEvent` following the [naming standards](https://github.com
 
 I'll be explaining all this by adding some tags called,
 
-- `scorehud.name` which would show the player name
-- `scorehud.online` which would show the players online on the server
-- `scorehud.money` which would show the players balance. 
+- `scorehudx.name` which would show the player name
+- `scorehudx.online` which would show the players online on the server
+- `scorehudx.money` which would show the players balance. 
 
 Remember this is no longer an addon so add it into your own plugin.
 
@@ -31,15 +31,15 @@ public function onTagResolve(TagsResolveEvent $event){
 	$tag = $event->getTag();
 
 	switch($tag->getName()){
-		case "scorehud.name":
+		case "scorehudx.name":
 			$tag->setValue($player->getName());
 		break;
 
-		case "scorehud.online":
+		case "scorehudx.online":
 			$tag->setValue(strval(count($this->getServer()->getOnlinePlayers())));
 		break;
 
-		case "scorehud.money":
+		case "scorehudx.money":
 			$tag->setValue(strval($player->getMoney()));
 		break;
 	}
@@ -68,7 +68,7 @@ Since my tag is related to money I'll fire the event whenever players balance ch
 public function onMoneyChange(MoneyChangedEvent $event){
 	$ev = new PlayerTagUpdateEvent(
 		$event->getPlayer(), 
-		new ScoreTag("scorehud.money", strval($event->getMoney()))
+		new ScoreTag("scorehudx.money", strval($event->getMoney()))
 	);
 	$ev->call();
 }
@@ -84,7 +84,7 @@ For `ServerTagUpdateEvent`, I'll use the following example for `scorehud.online`
 ```php
 public function onJoin(PlayerJoinEvent $event){
 	$ev = new ServerTagUpdateEvent(new ScoreTag(
-			"scorehud.online",
+			"scorehudx.online",
 			strval(count($this->getServer()->getOnlinePlayers())))
 	);
 	$ev->call();
@@ -92,7 +92,7 @@ public function onJoin(PlayerJoinEvent $event){
 
 public function onQuit(PlayerQuitEvent $event){
 	$ev = new ServerTagUpdateEvent(new ScoreTag(
-			"scorehud.online",
+			"scorehudx.online",
 			strval(count($this->getServer()->getOnlinePlayers())))
 	);
 	$ev->call();
